@@ -126,7 +126,7 @@ async function migrateIssuesOneByOne() {
   }]);
 
   if (anotherOne) {
-    migrateIssues();
+    await migrateIssuesOneByOne();
   }
 
 }

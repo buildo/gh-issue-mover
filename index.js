@@ -49,7 +49,7 @@ async function migrateIssue(issue) {
 }
 
 async function migrateIssuesByLabel(labels) {
-  const issues = await fromRepo.issues.fetch({ labels });
+  const issues = await fromRepo.issues.fetch({ labels, state: 'open' });
   const { confirm } = await inquirer.prompt([{
     type: 'confirm',
     name: 'confirm',

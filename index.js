@@ -59,6 +59,10 @@ async function migrateIssues() {
       body: `${authorshipNote}\n${issue.body}`
     };
     const newIssue = await toRepo.issues.create(issueToCreate);
+    await fromRepo.issues(issueNumber).comment.create({
+      body: `Issue migrated to ${toRepoConfig.owner}/${toRepoConfig.name}#${newIssue.number}`
+    });
+    await fromRepo.issues(issueNumber).update({ state: 'closed' });
     console.log(
       '\n',
       '🍭  Successfully migrated issue',

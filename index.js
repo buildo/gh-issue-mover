@@ -101,6 +101,7 @@ async function migrateIssues() {
 }
 
 try {
+  process.stdout.write('\x1Bc');
   migrateIssues();
 } catch (e) {
   console.log(e);

@@ -1,6 +1,11 @@
 # issue migrator
 A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos.
 
+## Features
+
+- migrate issues one by one
+- migrate issues in bulk using labels 
+
 ## Usage
 
 First, install all required dependencies

@@ -1,0 +1,13 @@
+{
+  "fromRepo": {
+    "owner": "buildo",
+    "name": "foo",
+    "token": "123123123123123123123123123123123123",
+    "rootURL": "https://github-enterprise.example.com/api/v3"
+  },
+  "toRepo": {
+    "owner": "buildo",
+    "name": "bar",
+    "token": "126312636126316231223123123122131231",
+  }
+}

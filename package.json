@@ -9,7 +9,8 @@
   "scripts": {
     "start": "babel-node src/index.js",
     "build": "babel src --out-dir lib",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "postpublish": "rm -rf build"
   },
   "author": "buildo",
   "license": "MIT",

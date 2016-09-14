@@ -17,10 +17,10 @@ A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos.
 
 ## Usage
 
-First, install all required dependencies
+Install from npm:
 
 ```sh
-npm install
+npm install -g gh-issue-mover
 ```
 
 Then create configuration file (e.g. `config.json`) that contains two keys `fromRepo` and `toRepo`:
@@ -51,7 +51,7 @@ Then create configuration file (e.g. `config.json`) that contains two keys `from
 Once you have a valid `config.json`, run
 
 ```sh
-npm start -- --config=config.json
+gh-issue-mover --config=config.json
 ```
 
 and follow the interactive prompt.

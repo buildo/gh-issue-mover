@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import Octokat from 'octokat';
 import inquirer from 'inquirer';
 import 'colors';

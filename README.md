@@ -1,4 +1,4 @@
-[![npm](https://img.shields.io/npm/v/gh-issue-mover.svg?maxAge=2592000)](https://www.npmjs.com/package/gh-issue-mover)
+[![npm](https://img.shields.io/npm/v/gh-issue-mover.svg)](https://www.npmjs.com/package/gh-issue-mover)
 
 # issue migrator
 A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos.

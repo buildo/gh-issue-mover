@@ -212,8 +212,12 @@ async function main() {
   console.log('\n👋  Ok! Goodbye!'.bold);
 }
 
-try {
+function clearConsole() {
   process.stdout.write('\x1Bc');
+}
+
+try {
+  clearConsole();
   console.log('🖖  Greetings, hooman!\n')
   console.log(`🚚  Ready to migrate issues from ${fromRepoName.bold} to ${toRepoName.bold}?\n`);
   main();

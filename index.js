@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 import 'colors';
 import open from 'open';
 import { pick } from 'lodash';
-import { fromRepo as fromRepoConfig, toRepo as toRepoConfig } from './config.json';
+import { fromRepoConfig, toRepoConfig } from './config.js';
 
 const fromGithub = new Octokat({
   token: fromRepoConfig.token,

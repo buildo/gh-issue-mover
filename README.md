@@ -23,7 +23,7 @@ First, install all required dependencies
 npm install
 ```
 
-Then create a file named `config.json` that contains two keys `fromRepo` and `toRepo`:
+Then create configuration file (e.g. `config.json`) that contains two keys `fromRepo` and `toRepo`:
 
 ```json
 {
@@ -48,10 +48,10 @@ Then create a file named `config.json` that contains two keys `fromRepo` and `to
 
 `rootURL` is the GitHub API endpoint (only required for GitHub Enterprise repos)
 
-Once you have a valid `config.json`, simply run
+Once you have a valid `config.json`, run
 
 ```sh
-npm start
+npm start -- --config=config.json
 ```
 
 and follow the interactive prompt.

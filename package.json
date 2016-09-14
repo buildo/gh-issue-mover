@@ -1,7 +1,7 @@
 {
   "name": "issue-migrator",
-  "version": "1.0.0",
-  "description": "",
+  "version": "1.0.1",
+  "description": "A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos",
   "main": "lib/index.js",
   "bin": {
     "gh-issue-mover": "lib/index.js"
@@ -10,7 +10,7 @@
     "start": "babel-node src/index.js",
     "build": "babel src --out-dir lib"
   },
-  "author": "",
+  "author": "buildo",
   "license": "MIT",
   "dependencies": {
     "babel-runtime": "^6.11.6",

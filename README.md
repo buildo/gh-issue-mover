@@ -1,6 +1,6 @@
 [![npm](https://img.shields.io/npm/v/gh-issue-mover.svg)](https://www.npmjs.com/package/gh-issue-mover)
 
-# issue migrator
+# 🚚  gh issue mover
 A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos.
 
 ## Features

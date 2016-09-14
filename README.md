@@ -3,8 +3,17 @@ A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos.
 
 ## Features
 
-- migrate issues one by one
-- migrate issues in bulk using labels 
+- migrate issues one by one or in bulk using labels
+- include comments, labels and assignees in the migration
+- include references to the original issue and author
+- close the original issue with a link to a new one
+- works with both (and across) GitHub and GitHub Enterprise
+
+## Example
+
+| original issue  |  migrated issue |
+|:---------------:|:---------------:|
+| ![image](https://github.omnilab.our.buildo.io/storage/user/3/files/70e73c9e-7a5b-11e6-8cb3-00dc048ce0d7) | ![image](https://github.omnilab.our.buildo.io/storage/user/3/files/5bfe83be-7a5b-11e6-88ce-97ff474a687e) |
 
 ## Usage
 

@@ -15,6 +15,9 @@ const toGithub = new Octokat({
   rootURL: toRepoConfig.rootURL
 });
 
+const fromRepoName = `${fromRepoConfig.owner}/${fromRepoConfig.name}`;
+const toRepoName = `${toRepoConfig.owner}/${toRepoConfig.name}`;
+
 const fromRepo = fromGithub.repos(fromRepoConfig.owner, fromRepoConfig.name);
 const toRepo = fromGithub.repos(toRepoConfig.owner, toRepoConfig.name);
 
@@ -116,7 +119,7 @@ async function migrateIssuesOneByOne() {
   const { issueNumber } = await inquirer.prompt([{
     type: 'input',
     name: 'issueNumber',
-    message: 'Which issue do you want to migrate?'
+    message: 'Which issue do you want to migrate? (type the #)'
   }]);
   const issue = await fromRepo.issues(issueNumber).fetch();
   console.log();
@@ -186,7 +189,7 @@ async function chooseMigrationType() {
   const { labels } = await inquirer.prompt([{
     type: 'input',
     name: 'labels',
-    message: 'Cool, which labels? (separate multiple labels with commas)',
+    message: 'Cool, which labels? (separate multiple labels with commas. They will go in AND)',
     when: migrationType === 'byLabel'
   }]);
 
@@ -210,6 +213,7 @@ async function main() {
 try {
   process.stdout.write('\x1Bc');
   console.log('🖖  Greetings, hooman!\n')
+  console.log(`🚚  Ready to migrate issues from ${fromRepoName.bold} to ${toRepoName.bold}?\n`);
   main();
 } catch (e) {
   console.log(e);

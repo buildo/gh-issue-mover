@@ -78,7 +78,7 @@ async function migrateIssue(issue) {
 
 async function migrateIssuesByLabel(labels) {
   const issuesAndPRs = await fromRepo.issues.fetch({ labels, state: 'open', filter: 'all' });
-  const issues = issuesAndPRs.filter(i => !pull_request);
+  const issues = issuesAndPRs.filter(i => !i.pullRequest);
 
   if (issues.length === 0) {
     console.log(`Sorry, no issues found matching labels ${labels.split(', ').map(l => l.green)}`);

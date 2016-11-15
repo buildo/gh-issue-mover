@@ -1,6 +1,6 @@
 {
   "name": "gh-issue-mover",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos",
   "main": "lib/index.js",
   "bin": {

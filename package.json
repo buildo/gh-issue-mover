@@ -1,8 +1,11 @@
 {
   "name": "gh-issue-mover",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A friendly CLI tool to migrate issues across GitHub and GitHub Enteprise repos",
   "main": "lib/index.js",
+  "files": [
+    "lib"
+  ],
   "bin": {
     "gh-issue-mover": "lib/index.js"
   },
@@ -10,8 +13,7 @@
     "start": "babel-node src/index.js",
     "build": "babel src --out-dir lib",
     "prepublish": "npm run build",
-    "postpublish": "rm -rf build",
-    "release": "smooth-release"
+    "postpublish": "rm -rf lib"
   },
   "author": "buildo",
   "license": "MIT",
@@ -29,7 +31,6 @@
     "babel-cli": "^6.14.0",
     "babel-plugin-transform-object-rest-spread": "^6.8.0",
     "babel-plugin-transform-runtime": "^6.15.0",
-    "babel-preset-latest": "^6.14.0",
-    "smooth-release": "^8.0.4"
+    "babel-preset-latest": "^6.14.0"
   }
 }

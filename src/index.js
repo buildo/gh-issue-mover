@@ -24,14 +24,7 @@ const fromRepo = fromGithub.repos(fromRepoConfig.owner, fromRepoConfig.name);
 const toRepo = fromGithub.repos(toRepoConfig.owner, toRepoConfig.name);
 
 async function migrateComment(issue, comment) {
-  const authorshipNote = [
-    '---',
-    '',
-    `Migrated from ${comment.htmlUrl}`,
-    `Originally created by @${comment.user.login} on *${new Date(comment.createdAt).toUTCString()}*`,
-    '',
-    '---'
-  ].join('\n');
+  const authorshipNote = `_From @${comment.user.login} on [${formatDate(comment.createdAt)}](${comment.htmlUrl})_\n\n`;
   const commentToCreate = {
     body: `${authorshipNote}\n${comment.body}`
   };
@@ -39,25 +32,42 @@ async function migrateComment(issue, comment) {
 }
 
 async function migrateIssue(issue) {
-  const authorshipNote = [
-    '---',
-    '',
-    `Migrated from ${issue.htmlUrl}`,
-    `Originally created by @${issue.user.login} on *${new Date(issue.createdAt).toUTCString()}*`,
-    '',
-    '---'
-  ].join('\n');
+  const authorshipNote = `_From @${issue.user.login} on [${formatDate(issue.createdAt)}](${issue.htmlUrl})_\n\n`;
   const issueToCreate = {
     ...pick(issue, ['title', 'labels']),
     assignees: issue.assignees.map(a => a.login),
     body: `${authorshipNote}\n${issue.body}`
   };
   try {
+    let commentsPage = await fromRepo.issues(issue.number).comments.fetch({per_page: 100});
+    let comments = [...commentsPage];
+    while (commentsPage.nextPage) {
+      commentsPage = await commentsPage.nextPage();
+      comments = [...comments, ...commentsPage];
+    }
     const newIssue = await toRepo.issues.create(issueToCreate);
-    const comments = await fromRepo.issues(issue.number).comments.fetch();
-    await Promise.all(comments.map(c => migrateComment(newIssue, c)));
+    if (issue.state === 'closed') {
+      await newIssue.update({state: issue.state});
+    }
+    let commentIndex = 1;
+    for (const comment of comments) {
+      process.stdout.write("\r\x1b[K");
+      process.stdout.write(`Migrating comment #${commentIndex++} of ${comments.length}... `);
+      try {
+        await migrateComment(newIssue, comment);
+        await sleep(1000);
+      } catch (e) {
+        if (e.status === 403) {
+          process.stdout.write('rate limited, waiting before trying again');
+          await sleep(60000);
+          await migrateComment(newIssue, comment);
+        } else {
+          throw e;
+        }
+      }
+    }
     await fromRepo.issues(issue.number).comments.create({
-      body: `Issue migrated to ${toRepoConfig.owner}/${toRepoConfig.name}#${newIssue.number}`
+      body: `_Migrated to ${toRepoConfig.owner}/${toRepoConfig.name}#${newIssue.number}_`
     });
     await fromRepo.issues(issue.number).update({ state: 'closed' });
     console.log(
@@ -130,6 +140,7 @@ async function migrateIssuesOneByOne() {
   console.log('Title:', issue.title.bold);
   console.log('Author:', issue.user.login.bold);
   console.log('State:', issue.state === 'open' ? issue.state.green.bold : issue.state.red.bold);
+  console.log('Comments:', issue.comments);
   console.log();
   const { confirm } = await inquirer.prompt([{
     type: 'confirm',
@@ -139,8 +150,8 @@ async function migrateIssuesOneByOne() {
       `You're about to migrate issue #${String(issue.number).yellow.bold} from`,
       `${fromRepoConfig.owner}/${fromRepoConfig.name}`.bold,
       'to',
-      `${toRepoConfig.owner}/${toRepoConfig.name}`.bold,
-      '. Are you sure?'
+      `${toRepoConfig.owner}/${toRepoConfig.name}`.bold + '.',
+      'Are you sure?'
     ].join(' ')
   }]);
 
@@ -214,6 +225,18 @@ async function main() {
 
 function clearConsole() {
   process.stdout.write('\x1Bc');
+}
+
+function formatDate(date) {
+  const dateStr = new Date(date).toISOString();
+  // '2018-02-19T06:26:17.000Z' => '2018-02-19 06:26'
+  return `${dateStr.slice(0, 10)} ${dateStr.slice(11, 16)}`;
+}
+
+function sleep(ms) {
+  return new Promise(resolve => {
+    setTimeout(resolve, ms);
+  });
 }
 
 try {

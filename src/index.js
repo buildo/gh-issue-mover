@@ -21,7 +21,7 @@ const fromRepoName = `${fromRepoConfig.owner}/${fromRepoConfig.name}`;
 const toRepoName = `${toRepoConfig.owner}/${toRepoConfig.name}`;
 
 const fromRepo = fromGithub.repos(fromRepoConfig.owner, fromRepoConfig.name);
-const toRepo = fromGithub.repos(toRepoConfig.owner, toRepoConfig.name);
+const toRepo = toGithub.repos(toRepoConfig.owner, toRepoConfig.name);
 
 async function migrateComment(issue, comment) {
   const authorshipNote = [
